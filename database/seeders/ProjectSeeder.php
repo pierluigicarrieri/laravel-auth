@@ -15,7 +15,7 @@ class ProjectSeeder extends Seeder
             'slug' => 'html-london-trip',
             'description' => 'A very basic project in Html. List items, pics, icons',
             'image' => '/images/html-london-trip.png',
-            'publication_date' => '19/05/2023',
+            'publication_date' => '2023/05/19',
             'technologies_used' => 'HTML',
             'git_link' => 'https://github.com/pierluigicarrieri/html-london-trip'
         ],
@@ -28,7 +28,7 @@ class ProjectSeeder extends Seeder
     {
         foreach($this->projects as $project) {
             $newProject = new Project();
-            $newProject->title = $project['title'];
+            $newProject->name = $project['name'];
             $newProject->slug = $project['slug'];
             $newProject->description = $project['description'];
             $newProject->image = $project['image'];
