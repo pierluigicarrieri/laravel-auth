@@ -39,7 +39,7 @@ class ProjectController extends Controller
         do {
 
             //Creating slug variable from 'title', if counter > 0, counter is concatenated to slug
-            $slug = Str::slug($data['title']) . ($counter > 0 ? '_' . $counter : '');
+            $slug = Str::slug($data['title']) . ($counter > 0 ? '-' . $counter : '');
 
             //Searches for an entry with same slug as above
             $alreadyExists = Project::where('slug', $slug)->first();
@@ -71,8 +71,8 @@ class ProjectController extends Controller
     //'SHOW' FUNCTION
     public function show($slug) {
 
-        //Fetches an entry from 'Project' table trough 'Project' model using the '$slug' as finder
-        $project = Project::findOrFail($slug);
+        //Fetches an entry from 'Project' table trough 'Project' model using the '$slug' as finder for a 'where' query ('findOrFail()' works only with id's)
+        $project = Project::where('slug', $slug)->first();
 
         //Returns 'show' view with 'project' as second argument, from '$project'
         return view('admin.projects.show', ['project'=>$project]);
