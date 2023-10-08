@@ -19,8 +19,8 @@ class ProjectController extends Controller
 
         //Returns 'create' view
         return view('admin.projects.create');
-
     }
+
     //'STORE' FUNCTION
     public function store(Request $request) {
 
@@ -56,24 +56,26 @@ class ProjectController extends Controller
 
         //Redirects to 'show' route with the id of newly created '$project' entry as second argument of 'route' function
         return redirect()->route('admin.project.show', $project->id);
-
     }
 
     //'INDEX' FUNCTION
     public function index() {
 
+        //Fetches all entries in 'Project' table trough 'Project' model and saves in '$project' variable
         $projects = Project::all();
 
+        //Returns 'index' view with 'projects' as second argument, from '$projects'
         return view('admin.projects.index', ['projects'=>$projects]);
-
     }
+
     //'SHOW' FUNCTION
-    public function show($id) {
+    public function show($slug) {
 
-        $project = Project::findOrFail($id);
+        //Fetches an entry from 'Project' table trough 'Project' model using the '$slug' as finder
+        $project = Project::findOrFail($slug);
 
+        //Returns 'show' view with 'project' as second argument, from '$project'
         return view('admin.projects.show', ['project'=>$project]);
-
     }
 
     // public function edit($id) {
