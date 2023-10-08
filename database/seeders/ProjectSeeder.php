@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Project;
 
 class ProjectSeeder extends Seeder
 {
@@ -13,7 +14,7 @@ class ProjectSeeder extends Seeder
             'name' => 'html-london-trip',
             'slug' => 'html-london-trip',
             'description' => 'A very basic project in Html. List items, pics, icons',
-            'image' => '',
+            'image' => '/images/html-london-trip.png',
             'publication_date' => '19/05/2023',
             'technologies_used' => 'HTML',
             'git_link' => 'https://github.com/pierluigicarrieri/html-london-trip'
@@ -25,6 +26,16 @@ class ProjectSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        foreach($this->projects as $project) {
+            $newProject = new Project();
+            $newProject->title = $project['title'];
+            $newProject->slug = $project['slug'];
+            $newProject->description = $project['description'];
+            $newProject->image = $project['image'];
+            $newProject->publication_date = $project['publication_date'];
+            $newProject->technologies_used = $project['technologies_used'];
+            $newProject->git_link = $project['git_link'];
+            $newProject->save();
+        }
     }
 }
