@@ -27,8 +27,12 @@ class ProjectController extends Controller
         // DATA VALIDATION
 
         $data = $request->validate([
-            'name'=>'required',
-            'technologies_used'=>'required'
+            'name' => 'required',
+            'description' => 'required',
+            'image' => 'required',
+            'publication_date' => 'required',
+            'technologies_used' => 'required',
+            'git_link' => 'required'
         ]);
 
         // SLUG CREATING MECHANISM
@@ -38,8 +42,8 @@ class ProjectController extends Controller
 
         do {
 
-            //Creating slug variable from 'title', if counter > 0, counter is concatenated to slug
-            $slug = Str::slug($data['title']) . ($counter > 0 ? '-' . $counter : '');
+            //Creating slug variable from 'name', if counter > 0, counter is concatenated to slug
+            $slug = Str::slug($data['name']) . ($counter > 0 ? '-' . $counter : '');
 
             //Searches for an entry with same slug as above
             $alreadyExists = Project::where('slug', $slug)->first();
@@ -50,12 +54,13 @@ class ProjectController extends Controller
         //Iterates while an entry with same slug exists in database
         } while ($alreadyExists);
 
+        $data['slug'] = $slug;
         
         //Creates a new '$project' entry using '$data' validated from '$request' (see above)
         $project = Project::create($data);
 
         //Redirects to 'show' route with the id of newly created '$project' entry as second argument of 'route' function
-        return redirect()->route('admin.project.show', $project->id);
+        return redirect()->route('admin.projects.show', $project->slug);
     }
 
     //'INDEX' FUNCTION

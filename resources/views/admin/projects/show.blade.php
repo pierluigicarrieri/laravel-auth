@@ -23,7 +23,7 @@
                             <p class="card-text">{{substr_replace($project['description'], '...', 100)}}</p>
                         </div>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">${{$project->publication_date}}</li>
+                            <li class="list-group-item">{{$project->publication_date}}</li>
                             <li class="list-group-item">{{$project->technologies_used}}</li>
                             <li class="list-group-item">
                                 <a href="{{$project->git_link}}">{{$project->git_link}}</a>
