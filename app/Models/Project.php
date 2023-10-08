@@ -12,9 +12,11 @@ class Project extends Model
     protected $fillable = [
         'name',
         'slug',
+        'description',
         'image',
         'publication_date',
-        'technologies_used'
+        'technologies_used',
+        'git_link'
     ];
 
     protected $casts = [
