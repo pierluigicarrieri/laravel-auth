@@ -1,33 +1,65 @@
 <?php
 
+//Creates namespace for present controller
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+//Uses Str class for slug creation
+use Illuminate\Support\Str;
+//Uses 'Project' model
 use App\Models\Project;
 
 class ProjectController extends Controller
 
+
 {
+    //'CREATE' FUNCTION
     public function create() {
 
+        //Returns 'create' view
         return view('admin.projects.create');
 
     }
-
+    //'STORE' FUNCTION
     public function store(Request $request) {
+
+        // DATA VALIDATION
 
         $data = $request->validate([
             'name'=>'required',
             'technologies_used'=>'required'
         ]);
 
+        // SLUG CREATING MECHANISM
+
+        //Creating counter
+        $counter = 0;
+
+        do {
+
+            //Creating slug variable from 'title', if counter > 0, counter is concatenated to slug
+            $slug = Str::slug($data['title']) . ($counter > 0 ? '_' . $counter : '');
+
+            //Searches for an entry with same slug as above
+            $alreadyExists = Project::where('slug', $slug)->first();
+
+            //Increments counter
+            $counter++;
+
+        //Iterates while an entry with same slug exists in database
+        } while ($alreadyExists);
+
+        
+        //Creates a new '$project' entry using '$data' validated from '$request' (see above)
         $project = Project::create($data);
 
-        return redirect()->route('admin.project.show');
+        //Redirects to 'show' route with the id of newly created '$project' entry as second argument of 'route' function
+        return redirect()->route('admin.project.show', $project->id);
 
     }
 
+    //'INDEX' FUNCTION
     public function index() {
 
         $projects = Project::all();
@@ -35,7 +67,7 @@ class ProjectController extends Controller
         return view('admin.projects.index', ['projects'=>$projects]);
 
     }
-
+    //'SHOW' FUNCTION
     public function show($id) {
 
         $project = Project::findOrFail($id);
@@ -44,33 +76,33 @@ class ProjectController extends Controller
 
     }
 
-    public function edit($id) {
+    // public function edit($id) {
 
-        $project = Project::findOrFail($id);
+    //     $project = Project::findOrFail($id);
 
-        return view();
+    //     return view();
 
-    }
+    // }
 
-    public function update(Request $request, $id) {
+    // public function update(Request $request, $id) {
 
-        $project = Project::findOrFail($id);
+    //     $project = Project::findOrFail($id);
 
-        $newProject = $request->all();
+    //     $newProject = $request->all();
 
-        $project->update($newProject);
+    //     $project->update($newProject);
 
-        return redirect()->route();
+    //     return redirect()->route();
 
-    }
+    // }
 
-    public function destroy($id) {
+    // public function destroy($id) {
 
-        $project = Project::findOrFail($id);
+    //     $project = Project::findOrFail($id);
 
-        $project->delete();
+    //     $project->delete();
 
-        return redirect()->route();
+    //     return redirect()->route();
 
-    }
+    // }
 }

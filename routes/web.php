@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\ProjectController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,21 +33,29 @@ require __DIR__.'/auth.php';
 
 // ADMIN/PROJECTS ROUTES
 
-// Create
+Route::middleware(['auth', 'verified'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group( function () {
 
-Route::get('/admin/projects/create', [ProjectController::class, 'create'])->name('admin.projects.create');
-Route::post('/admin/projects', [ProjectController::class, 'store'])->name('admin.projects.store');
+    // Create
 
-// Read
+    Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
+    Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
 
-Route::get('/admin/projects', [ProjectController::class, 'index'])->name('admin.projects.index');
-Route::get('/admin/projects/{project}', [ProjectController::class, 'show'])->name('admin.projects.show');
+    // Read
 
-// Update
+    Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+    Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
 
-Route::get('/admin/projects/{project}/edit', [ProjectController::class, 'edit'])->name('admin.projects.edit');
-Route::patch('/admin/projects/{project}', [ProjectController::class, 'update'])->name('admin.projects.update');
+    // Update
 
-// Delete
+    Route::get('/projects/{project}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
+    Route::patch('/projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
 
-Route::delete('/admin/projects/{project}', [ProjectController::class, 'destroy'])->name('admin.projects.destroy');
+    // Delete
+
+    Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+    
+});
+
