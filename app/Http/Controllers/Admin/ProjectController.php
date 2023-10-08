@@ -17,9 +17,14 @@ class ProjectController extends Controller
 
     public function store(Request $request) {
 
-        $project = $request->all();
+        $data = $request->validate([
+            'name'=>'required',
+            'technologies_used'=>'required'
+        ]);
 
-        $newProject = new Project();
+        $project = Project::create($data);
+
+        return redirect()->route('admin.project.show');
 
     }
 

@@ -29,3 +29,24 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+// ADMIN/PROJECTS ROUTES
+
+// Create
+
+Route::get('/admin/projects/create', [ProjectController::class, 'create'])->name('admin.projects.create');
+Route::post('/admin/projects', [ProjectController::class, 'store'])->name('admin.projects.store');
+
+// Read
+
+Route::get('/admin/projects', [ProjectController::class, 'index'])->name('admin.projects.index');
+Route::get('/admin/projects/{project}', [ProjectController::class, 'show'])->name('admin.projects.show');
+
+// Update
+
+Route::get('/admin/projects/{project}/edit', [ProjectController::class, 'edit'])->name('admin.projects.edit');
+Route::patch('/admin/projects/{project}', [ProjectController::class, 'update'])->name('admin.projects.update');
+
+// Delete
+
+Route::delete('/admin/projects/{project}', [ProjectController::class, 'destroy'])->name('admin.projects.destroy');
