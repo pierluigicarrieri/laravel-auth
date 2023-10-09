@@ -16,7 +16,7 @@
     
                         <form action="{{route('admin.projects.update', $project->slug)}}" method="POST" class="w-75">
                             @csrf()
-                            @method('patch')
+                            @method('PATCH')
     
                             <div class="mb-3">
                                 <label for="" class="form-label">Name</label>

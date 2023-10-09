@@ -87,7 +87,7 @@ class ProjectController extends Controller
     public function edit($slug) {
 
         //Fetches an entry from 'Project' table trough 'Project' model using the '$slug' as finder for a 'where' query ('findOrFail()' works only with id's)
-        $project = Project::where('slug', $slug)->firstOrFail();
+        $project = Project::where('slug', $slug)->first();
 
         //Returns 'show' view with 'project' as second argument, from '$project'
         return view('admin.projects.edit', ['project'=>$project]);
@@ -109,7 +109,7 @@ class ProjectController extends Controller
         ]);
 
         //Fetches an entry from 'Project' table trough 'Project' model using the '$slug' as finder for a 'where' query ('findOrFail()' works only with id's)
-        $project = Project::where('slug', $slug)->firstOrFail();
+        $project = Project::where('slug', $slug)->first();
 
         // SLUG CREATING MECHANISM
 
