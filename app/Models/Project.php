@@ -20,6 +20,11 @@ class Project extends Model
     ];
 
     protected $casts = [
-        'publication_date' => 'datetime:Y-m-d',
+        'publication_date' => 'date:Y-m-d',
     ];
+
+    public function getter_publication_date() {
+        return date('Y-m-d', strtotime($this->publication_date));
+    }
+
 }

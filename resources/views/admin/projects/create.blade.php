@@ -13,6 +13,16 @@
             <div class="row">
                     
                     <div class="col offset-md-2">
+
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
     
                         <form action="{{route('admin.projects.store')}}" method="POST" class="w-75">
                             @csrf()
