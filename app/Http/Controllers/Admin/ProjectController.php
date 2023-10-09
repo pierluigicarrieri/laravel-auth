@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 //Uses 'Project' model
 use App\Models\Project;
+//Uses 'ProjectStoreRequest' request
+use App\Http\Requests\ProjectStoreRequest;
 
 class ProjectController extends Controller
 
@@ -22,18 +24,11 @@ class ProjectController extends Controller
     }
 
     //'STORE' FUNCTION
-    public function store(Request $request) {
+    public function store(ProjectStoreRequest $request) {
 
         // DATA VALIDATION
 
-        $data = $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'image' => 'required',
-            'publication_date' => 'required',
-            'technologies_used' => 'required',
-            'git_link' => 'required'
-        ]);
+        $data = $request->validated();
 
         // SLUG CREATING MECHANISM
 
@@ -95,18 +90,11 @@ class ProjectController extends Controller
     }
 
     //'UPDATE' FUNCTION
-    public function update(Request $request, $slug) {
+    public function update(ProjectStoreRequest $request, $slug) {
 
         // DATA VALIDATION
 
-        $data = $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'image' => 'required',
-            'publication_date' => 'required',
-            'technologies_used' => 'required',
-            'git_link' => 'required'
-        ]);
+        $data = $request->validated();
 
         //Fetches an entry from 'Project' table trough 'Project' model using the '$slug' as finder for a 'where' query ('findOrFail()' works only with id's)
         $project = Project::where('slug', $slug)->first();
