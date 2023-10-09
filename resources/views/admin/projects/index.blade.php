@@ -9,7 +9,7 @@
         <h1 class="py-3 text-center text-danger">Projects index page (admin)</h1>
 
         <div class="d-flex justify-content-center pb-3">
-            <a class="btn btn-primary" href="{{route('admin.projects.create')}}">Create New Project</a>
+            <a class="btn btn-primary" href="{{route('admin.projects.create')}}">Add New Project</a>
         </div>
 
         <div class="row row-cols-4 g-4">

@@ -77,31 +77,69 @@ class ProjectController extends Controller
     public function show($slug) {
 
         //Fetches an entry from 'Project' table trough 'Project' model using the '$slug' as finder for a 'where' query ('findOrFail()' works only with id's)
-        $project = Project::where('slug', $slug)->first();
+        $project = Project::where('slug', $slug)->firstOrFail();
 
         //Returns 'show' view with 'project' as second argument, from '$project'
         return view('admin.projects.show', ['project'=>$project]);
     }
 
-    // public function edit($id) {
+    //'EDIT' FUNCTION
+    public function edit($slug) {
 
-    //     $project = Project::findOrFail($id);
+        //Fetches an entry from 'Project' table trough 'Project' model using the '$slug' as finder for a 'where' query ('findOrFail()' works only with id's)
+        $project = Project::where('slug', $slug)->firstOrFail();
 
-    //     return view();
+        //Returns 'show' view with 'project' as second argument, from '$project'
+        return view('admin.projects.edit', ['project'=>$project]);
 
-    // }
+    }
 
-    // public function update(Request $request, $id) {
+    //'UPDATE' FUNCTION
+    public function update(Request $request, $slug) {
 
-    //     $project = Project::findOrFail($id);
+        // DATA VALIDATION
 
-    //     $newProject = $request->all();
+        $data = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'image' => 'required',
+            'publication_date' => 'required',
+            'technologies_used' => 'required',
+            'git_link' => 'required'
+        ]);
 
-    //     $project->update($newProject);
+        //Fetches an entry from 'Project' table trough 'Project' model using the '$slug' as finder for a 'where' query ('findOrFail()' works only with id's)
+        $project = Project::where('slug', $slug)->firstOrFail();
 
-    //     return redirect()->route();
+        // SLUG CREATING MECHANISM
 
-    // }
+        //Creating counter
+        $counter = 0;
+
+        do {
+
+            //Creating slug variable from 'name', if counter > 0, counter is concatenated to slug
+            $slug = Str::slug($data['name']) . ($counter > 0 ? '-' . $counter : '');
+
+            //Searches for an entry with same slug as above
+            $alreadyExists = Project::where('slug', $slug)->first();
+
+            //Increments counter
+            $counter++;
+
+        //Iterates while an entry with same slug exists in database
+        } while ($alreadyExists);
+
+        //Saves '$slug' in '$data' array
+        $data['slug'] = $slug;
+
+        //Updates '$project' using '$data'
+        $project->update($data);
+
+        //Redirects to 'show' route with the '$slug' of newly updated '$project' entry as second argument of 'route' function
+        return redirect()->route('admin.projects.show', $project->slug);
+
+    }
 
     // public function destroy($id) {
 
