@@ -141,13 +141,16 @@ class ProjectController extends Controller
 
     }
 
-    // public function destroy($id) {
+    public function destroy($slug) {
 
-    //     $project = Project::findOrFail($id);
+        //Fetches an entry from 'Project' table trough 'Project' model using the '$slug' as finder for a 'where' query ('findOrFail()' works only with id's)
+        $project = Project::where('slug', $slug)->first();
 
-    //     $project->delete();
+        //Deletes '$project'
+        $project->delete();
 
-    //     return redirect()->route();
+        //Redirects to 'index' route
+        return redirect()->route('admin.projects.index');
 
-    // }
+    }
 }
