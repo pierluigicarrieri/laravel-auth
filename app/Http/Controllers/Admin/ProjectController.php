@@ -25,6 +25,8 @@ class ProjectController extends Controller
         return view('admin.projects.create');
     }
 
+
+
     //'STORE' FUNCTION
     public function store(ProjectStoreRequest $request) {
 
@@ -67,6 +69,8 @@ class ProjectController extends Controller
         return redirect()->route('admin.projects.show', $project->slug);
     }
 
+
+
     //'INDEX' FUNCTION
     public function index() {
 
@@ -76,6 +80,8 @@ class ProjectController extends Controller
         //Returns 'index' view with 'projects' as second argument, from '$projects'
         return view('admin.projects.index', ['projects'=>$projects]);
     }
+
+
 
     //'SHOW' FUNCTION
     public function show($slug) {
@@ -87,6 +93,8 @@ class ProjectController extends Controller
         return view('admin.projects.show', ['project'=>$project]);
     }
 
+
+
     //'EDIT' FUNCTION
     public function edit($slug) {
 
@@ -97,6 +105,8 @@ class ProjectController extends Controller
         return view('admin.projects.edit', ['project'=>$project]);
 
     }
+
+
 
     //'UPDATE' FUNCTION
     public function update(ProjectStoreRequest $request, $slug) {
@@ -130,6 +140,16 @@ class ProjectController extends Controller
         //Saves '$slug' in '$data' array
         $data['slug'] = $slug;
 
+        //Control to delete previous image from 'storage'
+        if (key_exists("image", $data)) {
+
+            //Saves 'image' file in 'storage' folder
+            $image_path = Storage::put("project_images", $data["image"]);
+        
+            //Deletes previous image from 'storage'
+            Storage::delete($project->image);
+        }
+
         //Saves 'image' file in 'storage' folder
         $image_path = Storage::put("project_images", $data["image"]);
 
@@ -144,10 +164,18 @@ class ProjectController extends Controller
 
     }
 
+
+
     public function destroy($slug) {
 
         //Fetches an entry from 'Project' table trough 'Project' model using the '$slug' as finder for a 'where' query ('findOrFail()' works only with id's)
         $project = Project::where('slug', $slug)->first();
+
+        // Control to delete image from 'storage' folder
+        if ($project->image) {
+
+            Storage::delete($project->image);
+        }
 
         //Deletes '$project'
         $project->delete();

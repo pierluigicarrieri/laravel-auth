@@ -40,7 +40,7 @@
 
                         <div class="mb-3">
                             <label for="" class="form-label">Image</label>
-                            <img class="w-25 m-3 border border-primary" src="{{old('image', $project->image)}}">
+                            <img class="w-25 m-3 border border-primary" src="{{asset('storage/' . $project->image)}}">
                             <input type="file" class="form-control" name="image">
                         </div>
 
