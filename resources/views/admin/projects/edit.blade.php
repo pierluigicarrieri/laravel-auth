@@ -24,7 +24,7 @@
                     </div>
                     @endif
 
-                    <form action="{{route('admin.projects.update', $project->slug)}}" method="POST" class="w-75">
+                    <form action="{{route('admin.projects.update', $project->slug)}}" method="POST" enctype="multipart/form-data" class="w-75">
                         @csrf()
                         @method('PATCH')
 
@@ -40,7 +40,8 @@
 
                         <div class="mb-3">
                             <label for="" class="form-label">Image</label>
-                            <input type="text" class="form-control" name="image"  value="{{old('image', $project->image)}}">
+                            <img class="w-25 m-3 border border-primary" src="{{old('image', $project->image)}}">
+                            <input type="file" class="form-control" name="image">
                         </div>
 
                         <div class="mb-3">

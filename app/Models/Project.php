@@ -24,7 +24,7 @@ class Project extends Model
     ];
 
     public function getter_publication_date() {
-        return date('Y-m-d', strtotime($this->publication_date));
+        return date('d-m-y', strtotime($this->publication_date));
     }
 
 }

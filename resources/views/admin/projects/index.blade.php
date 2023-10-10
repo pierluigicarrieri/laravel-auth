@@ -20,7 +20,7 @@
 
                     <div class="card h-100">
                         <a href="{{route('admin.projects.show', $project->slug)}}">
-                            <img src="{{$project->image}}" class="card-img-top" alt="">
+                            <img src="{{asset('storage/' . $project->image)}}" class="card-img-top" alt="">
                         </a>
                         <div class="card-body">
                             <h5 class="card-title">{{$project->name}}</h5>

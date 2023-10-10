@@ -12,6 +12,8 @@ use App\Models\Project;
 //Uses 'ProjectStoreRequest' request
 use App\Http\Requests\ProjectStoreRequest;
 
+use Illuminate\Support\Facades\Storage;
+
 class ProjectController extends Controller
 
 
@@ -49,7 +51,14 @@ class ProjectController extends Controller
         //Iterates while an entry with same slug exists in database
         } while ($alreadyExists);
 
+        //Assigns '$slug' value to 'slug' property of '$data' array
         $data['slug'] = $slug;
+
+        //Saves 'image' file in 'storage' folder
+        $image_path = Storage::put("project_images", $data["image"]);
+
+        //Assigns '$image_path' value to 'image' property of '$data' array
+        $data['image'] = $image_path;
         
         //Creates a new '$project' entry using '$data' validated from '$request' (see above)
         $project = Project::create($data);
@@ -120,6 +129,12 @@ class ProjectController extends Controller
 
         //Saves '$slug' in '$data' array
         $data['slug'] = $slug;
+
+        //Saves 'image' file in 'storage' folder
+        $image_path = Storage::put("project_images", $data["image"]);
+
+        //Assigns '$image_path' value to 'image' property of '$data' array
+        $data['image'] = $image_path;
 
         //Updates '$project' using '$data'
         $project->update($data);

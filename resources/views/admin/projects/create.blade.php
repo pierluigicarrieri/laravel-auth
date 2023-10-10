@@ -24,7 +24,7 @@
                         </div>
                         @endif
     
-                        <form action="{{route('admin.projects.store')}}" method="POST" class="w-75">
+                        <form action="{{route('admin.projects.store')}}" method="POST" enctype="multipart/form-data" class="w-75">
                             @csrf()
     
                             <div class="mb-3">
@@ -39,7 +39,7 @@
     
                             <div class="mb-3">
                                 <label for="" class="form-label">Image</label>
-                                <input type="text" class="form-control" name="image">
+                                <input type="file" class="form-control" name="image">
                             </div>
     
                             <div class="mb-3">

@@ -17,7 +17,7 @@
                     </button>
     
                     <div class="card my-5">
-                        <img src="{{$project->image}}" class="card-img-top" alt="">
+                        <img src="{{asset('storage/' . $project->image)}}" class="card-img-top" alt="">
                         <div class="card-body">
                             <h5 class="card-title">{{$project->name}}</h5>
                             <p class="card-text">{{substr_replace($project['description'], '...', 100)}}</p>
